@@ -13,9 +13,10 @@ import {
     IonAlert,
     IonToast,
     IonButtons,
-    IonButton
+    IonButton,
+    useIonRouter
 } from '@ionic/react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { add, arrowUpCircle, constructOutline, cubeOutline, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
@@ -43,7 +44,7 @@ const Structure: React.FC = () => {
     const [toastMessage, setToastMessage] = useState('');
     const [isError, setIsError] = useState(false);
     const searchRef = useRef<HTMLIonSearchbarElement>(null);
-    const history = useHistory();
+    const router = useIonRouter();
     const location = useLocation();
 
     // Reset state when location changes (including tab navigation)
@@ -97,18 +98,19 @@ const Structure: React.FC = () => {
 
     const handleConstructClick = () => {
         if (!selectedRow) return;
-        history.push({
-            pathname: '/menu/home/buildingcode',
-            search: `?structure_code=${selectedRow.structure_code}`,
-            state: { structureData: selectedRow }
-        });
+        // Method 1: Using query parameters only (recommended)
+        router.push(`/menu/home/buildingcode?structure_code=${selectedRow.structure_code}`, 'forward');
+        
+        // Method 2: If you need to pass complex data, use a different approach
+        // You can store the data in a context, service, or localStorage temporarily
+        // Or fetch it again in the target component using the structure_code
     };
 
     const handleCubeOutlineClick = () => {
-        history.push('/menu/home/buildingcom');
+        router.push('/menu/home/buildingcom', 'forward');
     };
 
-    const handleBackClick = () => history.push('/menu/home');
+    const handleBackClick = () => router.push('/menu/home', 'back');
 
     const handleDeleteConfirm = async () => {
         if (!selectedRow) return;

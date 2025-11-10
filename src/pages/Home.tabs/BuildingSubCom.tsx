@@ -14,10 +14,11 @@ import {
     IonButtons,
     IonLabel,
     IonToast,
-    IonAlert
+    IonAlert,
+    useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, arrowBack, checkmarkCircle, closeCircle } from 'ionicons/icons';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './../../CSS/Setup.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
@@ -71,7 +72,7 @@ const BuildingSubCom: React.FC = () => {
     const [buildingComId, setBuildingComId] = useState<string | null>(null);
     const [buildingComData, setBuildingComData] = useState<LocationState['buildingComData'] | null>(null);
     const searchRef = useRef<HTMLIonSearchbarElement>(null);
-    const history = useHistory();
+    const router = useIonRouter();
     const location = useLocation();
 
     useEffect(() => {
@@ -128,7 +129,7 @@ const BuildingSubCom: React.FC = () => {
     const handleAddClick = () => setShowCreateModal(true);
     const handleEditClick = () => selectedRow && setShowUpdateModal(true);
     const handleDeleteClick = () => selectedRow && setShowDeleteAlert(true);
-    const handleBackClick = () => history.push('/menu/home/buildingcom');
+    const handleBackClick = () => router.push('/menu/home/buildingcom', 'back');
 
     const handleDeleteConfirm = async () => {
         if (!selectedRow || !buildingComId) return;

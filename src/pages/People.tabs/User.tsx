@@ -16,13 +16,14 @@ import {
     IonItem,
     IonLabel,
     IonInput,
-    IonButtons
+    IonButtons,
+    useIonRouter
 } from '@ionic/react';
 import { add, banOutline, trash, phonePortraitOutline, eye, eyeOff, checkmarkCircle, closeCircle, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import bcrypt from 'bcryptjs';
 
 interface UserItem {
@@ -37,7 +38,7 @@ interface UserItem {
 }
 
 const User: React.FC = () => {
-    const history = useHistory();
+    const router = useIonRouter();
     const location = useLocation();
     const [users, setUsers] = useState<UserItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -123,9 +124,9 @@ const User: React.FC = () => {
     }, [users, searchTerm]);
 
     const handleRowClick = (row: UserItem) => setSelectedRow(row);
-    const handleAddUser = () => history.push('/menu/people/register');
-    const handleCheckDevice = () => selectedRow && history.push(`/menu/people/devices?user_id=${selectedRow.user_id}`);
-    const handleBackClick = () => history.push('/menu');
+    const handleAddUser = () => router.push('/menu/people/register', 'forward', 'push');
+    const handleCheckDevice = () => selectedRow && router.push(`/menu/people/devices?user_id=${selectedRow.user_id}`, 'forward', 'push');
+    const handleBackClick = () => router.push('/menu', 'back');
 
     const iconButtons = [
         { icon: add, onClick: handleAddUser, disabled: false, title: 'Add User' },

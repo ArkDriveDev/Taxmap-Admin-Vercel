@@ -12,13 +12,13 @@ import {
   IonSearchbar,
   IonToast,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { businessOutline, readerOutline, buildOutline, earthOutline, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup2.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
-import { useHistory } from 'react-router-dom';
 
 interface KindItem {
   kind_id: number;
@@ -35,7 +35,7 @@ const Kind: React.FC = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const searchRef = useRef<HTMLIonSearchbarElement>(null);
-  const history = useHistory();
+  const router = useIonRouter();
 
   const isBuilding = selectedRow?.description.toUpperCase() === 'BUILDING';
   const isMachinery = selectedRow?.description.toUpperCase() === 'MACHINERY';
@@ -76,37 +76,25 @@ const Kind: React.FC = () => {
 
   const handleManageAssessmentLevels = () => {
     if (!selectedRow) return;
-    history.push(`/menu/home/assesmentlevel?kind_id=${selectedRow.kind_id}`);
+    router.push(`/menu/home/assesmentlevel?kind_id=${selectedRow.kind_id}`, 'forward', 'push');
   };
 
   const handleBuildingStructuralType = () => {
     if (!selectedRow || !isBuilding) return;
-    history.push({
-      pathname: '/menu/home/structure',
-      search: `?kind_id=${selectedRow.kind_id}`,
-      state: { kindData: selectedRow }
-    });
+    router.push(`/menu/home/structure?kind_id=${selectedRow.kind_id}`, 'forward', 'push');
   };
 
   const handleManageEquipment = () => {
     if (!selectedRow || !isMachinery) return;
-    history.push({
-      pathname: '/menu/home/equipment',
-      search: `?kind_id=${selectedRow.kind_id}`,
-      state: { kindData: selectedRow }
-    });
+    router.push(`/menu/home/equipment?kind_id=${selectedRow.kind_id}`, 'forward', 'push');
   };
 
   const handleLandManagement = () => {
     if (!selectedRow || !isLand) return;
-    history.push({
-      pathname: '/menu/home/landadjustment',
-      search: `?kind_id=${selectedRow.kind_id}`,
-      state: { kindData: selectedRow }
-    });
+    router.push(`/menu/home/landadjustment?kind_id=${selectedRow.kind_id}`, 'forward', 'push');
   };
 
-  const handleBackClick = () => history.push('/menu');
+  const handleBackClick = () => router.push('/menu', 'back');
 
   const iconButtons = [
     { icon: readerOutline, onClick: handleManageAssessmentLevels, disabled: !selectedRow, title: "Manage Assessment Levels" },

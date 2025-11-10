@@ -13,7 +13,8 @@ import {
   IonAlert,
   IonToast,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup2.css';
@@ -21,7 +22,7 @@ import { supabase } from './../../utils/supaBaseClient';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import LandAdjustmentCreateModal from '../../components/LandAdjustmentModals/LandAdjustmentCreateModal';
 import LandAdjustmentUpdateModal from '../../components/LandAdjustmentModals/LandAdjustmentUpdateModal';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface LandAdjustmentItem {
   adjustment_id: string;
@@ -43,7 +44,7 @@ const LandAdjustment: React.FC = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const searchRef = useRef<HTMLIonSearchbarElement>(null);
-  const history = useHistory();
+  const router = useIonRouter();
   const location = useLocation();
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const LandAdjustment: React.FC = () => {
   const handleCreateClick = () => setShowCreateModal(true);
   const handleArrowUpClick = () => selectedRow && setShowUpdateModal(true);
   const handleTrashClick = () => selectedRow && setShowDeleteAlert(true);
-  const handleBackClick = () => history.push('/menu/home');
+  const handleBackClick = () => router.push('/menu/home', 'back');
 
   const handleDeleteConfirm = async () => {
     if (!selectedRow) return;

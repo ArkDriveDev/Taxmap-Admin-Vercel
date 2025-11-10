@@ -13,14 +13,14 @@ import {
     IonAlert,
     IonToast,
     IonButtons,
-    IonButton
+    IonButton,
+    useIonRouter
 } from '@ionic/react';
 import { arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
 import DeclarantUpdateModal from '../../components/DeclarantModals/DeclarantUpdateModal';
-import { useHistory } from 'react-router-dom';
 
 interface FormItem {
     form_id: string;
@@ -31,7 +31,7 @@ interface FormItem {
 }
 
 const Declarant: React.FC = () => {
-    const history = useHistory();
+    const router = useIonRouter();
     const [forms, setForms] = useState<FormItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -108,7 +108,7 @@ const Declarant: React.FC = () => {
         }
     };
 
-    const handleBackClick = () => history.push('/menu/people/user');
+    const handleBackClick = () => router.push('/menu/people/user', 'back');
 
     const iconButtons = [
         { icon: arrowUpCircle, onClick: handleUpdateClick, disabled: !selectedRow, title: "Update Declarant" },

@@ -13,11 +13,12 @@ import {
   IonLoading,
   IonAlert,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { supabase } from '../../utils/supaBaseClient';
 import ActualUsedCreateModal from '../../components/ActualUsedModals/ActualUsedCreateModal';
 import ActualUsedUpdateModal from '../../components/ActualUsedModals/ActualUsedUpdateModal';
@@ -39,7 +40,7 @@ const ActualUsed: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const searchRef = useRef<HTMLIonSearchbarElement>(null);
   const location = useLocation();
-  const history = useHistory();
+  const router = useIonRouter();
   const [classificationData, setClassificationData] = useState<ClassificationData | null>(null);
   const [actualUsedItems, setActualUsedItems] = useState<ActualUsedItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -171,7 +172,7 @@ const ActualUsed: React.FC = () => {
     setIsUpdateModalOpen(false);
   };
 
-  const handleBackClick = () => history.push('/menu/home/classification');
+  const handleBackClick = () => router.push('/menu/home/classification', 'back');
 
   const iconButtons = [
     { icon: add, onClick: handleCreateClick, disabled: !classificationData, title: "Add Actual Used" },

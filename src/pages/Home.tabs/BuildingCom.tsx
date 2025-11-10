@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import {
     IonContent,
     IonHeader,
-    IonPage,
     IonTitle,
     IonToolbar,
     IonGrid,
@@ -15,10 +14,10 @@ import {
     IonToast,
     IonButton,
     IonButtons,
-    IonLabel
+    useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, arrowBack, appsOutline } from 'ionicons/icons';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './../../CSS/Setup.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import BuildingComCreateModal from '../../components/BuildingComModals/BuildingComCreateModal';
@@ -44,7 +43,7 @@ const BuildingCom: React.FC = () => {
     const [toastMessage, setToastMessage] = useState('');
     const [isError, setIsError] = useState(false);
     const searchRef = useRef<HTMLIonSearchbarElement>(null);
-    const history = useHistory();
+    const router = useIonRouter();
     const location = useLocation();
 
     // Reset state when location changes (including tab navigation)
@@ -114,19 +113,13 @@ const BuildingCom: React.FC = () => {
     const handleManageSubcomponents = () => {
         if (selectedRow) {
             // Navigate to BuildingSubCom with the selected building component data
-            history.push({
-                pathname: '/menu/home/buildingsubcom',
-                search: `?building_com_id=${selectedRow.building_com_id}`,
-                state: {
-                    buildingComData: selectedRow
-                }
-            });
+            router.push(`/menu/home/buildingsubcom?building_com_id=${selectedRow.building_com_id}`, 'forward', 'push');
         }
     };
 
     const handleBackClick = () => {
         // Navigate back to the structure page
-        history.push('/menu/home/structure');
+        router.push('/menu/home/structure', 'back');
     };
 
     const handleDeleteConfirm = async () => {
@@ -179,7 +172,7 @@ const BuildingCom: React.FC = () => {
     ];
 
     return (
-        <IonPage>
+        <>
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
@@ -276,7 +269,7 @@ const BuildingCom: React.FC = () => {
                     color={isError ? 'danger' : 'success'}
                 />
             </IonContent>
-        </IonPage>
+        </>
     );
 };
 

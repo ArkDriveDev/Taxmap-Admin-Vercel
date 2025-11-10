@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   IonContent,
   IonHeader,
@@ -14,7 +14,8 @@ import {
   IonToast,
   IonAlert,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
@@ -33,7 +34,7 @@ interface SubclassRateItem {
 
 const SubclassRate: React.FC = () => {
   const location = useLocation();
-  const history = useHistory();
+  const router = useIonRouter();
   const [subclassId, setSubclassId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [rates, setRates] = useState<SubclassRateItem[]>([]);
@@ -138,8 +139,8 @@ const SubclassRate: React.FC = () => {
   const handleBackClick = () => {
     const queryParams = new URLSearchParams(location.search);
     const classId = queryParams.get('class_id');
-    if (classId) history.push(`/menu/home/subclass?class_id=${classId}`);
-    else history.push('/menu/home/subclass');
+    if (classId) router.push(`/menu/home/subclass?class_id=${classId}`, 'back');
+    else router.push('/menu/home/subclass', 'back');
   };
 
   const iconButtons = [

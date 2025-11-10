@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   IonContent,
   IonHeader,
@@ -14,7 +14,8 @@ import {
   IonToast,
   IonAlert,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, cashOutline, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
@@ -33,7 +34,7 @@ interface SubclassItem {
 
 const Subclass: React.FC = () => {
   const location = useLocation();
-  const history = useHistory();
+  const router = useIonRouter();
   const [classId, setClassId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -134,10 +135,10 @@ const Subclass: React.FC = () => {
 
   const handleRate = () => {
     if (selectedRow)
-      history.push(`/menu/home/subclassrate?subclass_id=${selectedRow.subclass_id}&class_id=${classId}`);
+      router.push(`/menu/home/subclassrate?subclass_id=${selectedRow.subclass_id}&class_id=${classId}`, 'forward', 'push');
   };
 
-  const handleBackClick = () => history.push('/menu/home/classification');
+  const handleBackClick = () => router.push('/menu/home/classification', 'back');
 
   const iconButtons = [
     { icon: add, onClick: () => setIsCreateModalOpen(true), disabled: !classId, title: "Add Subclass" },

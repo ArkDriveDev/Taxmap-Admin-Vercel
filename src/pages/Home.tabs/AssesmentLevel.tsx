@@ -13,13 +13,14 @@ import {
     IonAlert,
     IonToast,
     IonButtons,
-    IonButton
+    IonButton,
+    useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup2.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import AssessmentCreateModal from '../../components/AssesmentLevelModals/AssesmentCreateModal';
 import AssessmentUpdateModal from '../../components/AssesmentLevelModals/AssessmentUpdateModal';
 
@@ -46,7 +47,7 @@ const AssessmentLevel: React.FC = () => {
     const searchRef = useRef<HTMLIonSearchbarElement>(null);
     const [isError, setIsError] = useState(false);
     const location = useLocation();
-    const history = useHistory();
+    const router = useIonRouter();
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [selectedAssessmentLevel, setSelectedAssessmentLevel] = useState<AssessmentLevelItem | null>(null);
     const [kindId, setKindId] = useState<string | null>(null);
@@ -165,7 +166,7 @@ const AssessmentLevel: React.FC = () => {
     };
 
     const handleBackClick = () => {
-        history.push('/menu/home/kind');
+        router.push('/menu/home/kind', 'back');
     };
 
     const iconButtons = [

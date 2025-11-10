@@ -13,12 +13,13 @@ import {
   IonAlert,
   IonToast,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { supabase } from '../../utils/supaBaseClient';
 import BarangayCreateModal from '../../components/BarangayModals/BarangayCreateModal';
 import BarangayUpdateModal from '../../components/BarangayModals/BarangayUpdateModal';
@@ -32,7 +33,7 @@ interface BarangayItem {
 
 const Barangay: React.FC = () => {
   const location = useLocation();
-  const history = useHistory();
+  const router = useIonRouter();
   const [districtId, setDistrictId] = useState<number | null>(null);
   const [barangays, setBarangays] = useState<BarangayItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -142,7 +143,9 @@ const Barangay: React.FC = () => {
     setShowToast(true);
   };
 
-  const handleBackClick = () => history.push('/menu/home/district');
+  const handleBackClick = () => {
+    router.push('/menu/home/district', 'back');
+  };
 
   const iconButtons = [
     { icon: add, onClick: handleCreateClick, disabled: !districtId, title: "Add Barangay" },

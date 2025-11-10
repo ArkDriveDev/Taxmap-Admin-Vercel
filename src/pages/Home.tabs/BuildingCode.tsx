@@ -14,9 +14,10 @@ import {
     IonToast,
     IonButton,
     IonLabel,
-    IonButtons
+    IonButtons,
+    useIonRouter
 } from '@ionic/react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { add, arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
@@ -53,7 +54,7 @@ const BuildingCode: React.FC = () => {
     const [isError, setIsError] = useState(false);
     const searchRef = useRef<HTMLIonSearchbarElement>(null);
     const location = useLocation();
-    const history = useHistory();
+    const router = useIonRouter();
     const [structureCode, setStructureCode] = useState<string | null>(null);
     const [structureData, setStructureData] = useState<LocationState['structureData'] | null>(null);
 
@@ -111,7 +112,7 @@ const BuildingCode: React.FC = () => {
     const handleAddClick = () => setShowCreateModal(true);
     const handleEditClick = () => selectedRow && setShowUpdateModal(true);
     const handleDeleteClick = () => selectedRow && setShowDeleteAlert(true);
-    const handleBackClick = () => history.push('/menu/home/structure');
+    const handleBackClick = () => router.push('/menu/home/structure', 'back');
 
     const handleDeleteConfirm = async () => {
         if (!selectedRow) return;

@@ -13,7 +13,8 @@ import {
   IonAlert,
   IonToast,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, cashOutline, podiumOutline, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup2.css';
@@ -21,7 +22,6 @@ import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
 import DistrictCreateModal from '../../components/DistrictModal/DistrictCreateModal';
 import DistrictUpdateModal from '../../components/DistrictModal/DistrictUpdateModal';
-import { useHistory } from 'react-router-dom';
 
 interface DistrictItem {
   district_id: number;
@@ -31,7 +31,7 @@ interface DistrictItem {
 }
 
 const District: React.FC = () => {
-  const history = useHistory();
+  const router = useIonRouter();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [districts, setDistricts] = useState<DistrictItem[]>([]);
@@ -138,9 +138,9 @@ const District: React.FC = () => {
     }
   };
 
-  const handleCashClick = () => selectedRow && history.push(`/menu/home/taxrate?district_id=${selectedRow.district_id}`);
-  const handleBarangayClick = () => selectedRow && history.push(`/menu/home/barangay?district_id=${selectedRow.district_id}`);
-  const handleBackClick = () => history.push('/menu');
+  const handleCashClick = () => selectedRow && router.push(`/menu/home/taxrate?district_id=${selectedRow.district_id}`, 'forward', 'push');
+  const handleBarangayClick = () => selectedRow && router.push(`/menu/home/barangay?district_id=${selectedRow.district_id}`, 'forward', 'push');
+  const handleBackClick = () => router.push('/menu', 'back');
 
   const iconButtons = [
     { icon: add, onClick: () => setShowCreateModal(true), disabled: false, title: "Add District" },

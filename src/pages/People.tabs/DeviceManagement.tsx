@@ -13,13 +13,14 @@ import {
     IonToast,
     IonAlert,
     IonButtons,
-    IonButton
+    IonButton,
+    useIonRouter
 } from '@ionic/react';
 import { checkmarkCircleOutline, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface DeviceItem {
     device_id: string;
@@ -32,7 +33,7 @@ interface DeviceItem {
 
 const DeviceManagement: React.FC = () => {
     const location = useLocation();
-    const history = useHistory();
+    const router = useIonRouter();
     const [devices, setDevices] = useState<DeviceItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -164,7 +165,7 @@ const DeviceManagement: React.FC = () => {
         }
     };
 
-    const handleBackClick = () => history.push('/menu/people/user');
+    const handleBackClick = () => router.push('/menu/people/user', 'back');
 
     const iconButtons = [
         {

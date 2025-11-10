@@ -13,11 +13,12 @@ import {
   IonLoading,
   IonAlert,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
 import EquipmentCreateModal from '../../components/EquipmentModals/EquipmentCreateModal';
@@ -43,7 +44,7 @@ const Equipment: React.FC = () => {
 
   const searchRef = useRef<HTMLIonSearchbarElement>(null);
   const location = useLocation();
-  const history = useHistory();
+  const router = useIonRouter();
 
   // Reset selected row and search on location change
   useEffect(() => {
@@ -132,7 +133,7 @@ const Equipment: React.FC = () => {
     setShowToast(true);
   };
 
-  const handleBackClick = () => history.push('/menu/home');
+  const handleBackClick = () => router.push('/menu/home', 'back');
 
   const iconButtons = [
     { icon: add, onClick: handleCreateClick, title: "Add Equipment" },

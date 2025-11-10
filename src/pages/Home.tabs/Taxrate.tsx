@@ -13,9 +13,10 @@ import {
   IonAlert,
   IonToast,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { add, arrowUpCircle, trash, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
 import TaxrateCreateModal from '../../components/TaxrateModals/TaxrateCreateModal';
@@ -42,7 +43,7 @@ const Taxrate: React.FC = () => {
   const [toastMessage, setToastMessage] = useState('');
   const searchRef = useRef<HTMLIonSearchbarElement>(null);
   const location = useLocation();
-  const history = useHistory();
+  const router = useIonRouter();
   const [isError, setIsError] = useState(false);
   const [districtId, setDistrictId] = useState<string | null>(null);
 
@@ -122,7 +123,7 @@ const Taxrate: React.FC = () => {
     }
   };
 
-  const handleBackClick = () => history.push('/menu/home/district');
+  const handleBackClick = () => router.push('/menu/home/district', 'back');
 
   const iconButtons = [
     { icon: add, onClick: () => setShowCreateModal(true), disabled: !districtId, title: "Add Tax Rate" },

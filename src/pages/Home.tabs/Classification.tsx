@@ -13,7 +13,8 @@ import {
   IonAlert,
   IonToast,
   IonButtons,
-  IonButton
+  IonButton,
+  useIonRouter
 } from '@ionic/react';
 import { add, arrowUpCircle, layersOutline, trash, briefcaseOutline, arrowBack } from 'ionicons/icons';
 import './../../CSS/Setup.css';
@@ -21,7 +22,7 @@ import ClassificationCreateModal from '../../components/ClassificationModals/Cla
 import ClassificationUpdateModal from '../../components/ClassificationModals/ClassificationUpdateModal';
 import DynamicTable from '../../components/Globalcomponents/DynamicTable';
 import { supabase } from '../../utils/supaBaseClient';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface ClassificationItem {
   class_id: string;
@@ -30,7 +31,7 @@ interface ClassificationItem {
 }
 
 const Classification: React.FC = () => {
-  const history = useHistory();
+  const router = useIonRouter();
   const location = useLocation();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -104,7 +105,7 @@ const Classification: React.FC = () => {
 
   const handleRowClick = (rowData: ClassificationItem) => setSelectedRow(rowData);
   const handleUpdateClick = () => selectedRow && (setSelectedClassification(selectedRow), setShowUpdateModal(true));
-  const handleBackClick = () => history.push('/menu');
+  const handleBackClick = () => router.push('/menu', 'back');
 
   const handleDeleteClick = async () => {
     if (!selectedRow) return;
@@ -140,21 +141,13 @@ const Classification: React.FC = () => {
 
   const navigateToSubclass = () => {
     if (selectedRow) {
-      history.push({
-        pathname: '/menu/home/subclass',
-        search: `?class_id=${selectedRow.class_id}`,
-        state: { classificationData: selectedRow }
-      });
+      router.push(`/menu/home/subclass?class_id=${selectedRow.class_id}`, 'forward', 'push');
     }
   };
 
   const navigateToActualUsed = () => {
     if (selectedRow) {
-      history.push({
-        pathname: '/menu/home/actualused',
-        search: `?class_id=${selectedRow.class_id}`,
-        state: { classificationData: selectedRow }
-      });
+      router.push(`/menu/home/actualused?class_id=${selectedRow.class_id}`, 'forward', 'push');
     }
   };
 
