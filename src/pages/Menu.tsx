@@ -45,9 +45,7 @@ const Menu: React.FC = () => {
 
   const path = [
     { name: 'Dashboard', url: '/menu/dashboard', icon: analyticsOutline },
-    { name: 'Home', url: '/menu/home', icon: homeOutline },
     { name: 'Map', url: '/menu/map', icon: mapOutline },
-    { name: 'People', url: '/menu/people', icon: peopleOutline },
     { name: 'Forms', url: '/menu/forms', icon: documentTextOutline },
     { name: 'Logs', url: '/menu/logs', icon: terminalOutline },
   ];
@@ -129,9 +127,7 @@ const Menu: React.FC = () => {
         <IonContent>
           <IonRouterOutlet>
             <Route exact path="/menu/dashboard" component={Dashboard} />
-            <Route exact path="/menu/home" component={Home} />
             <Route exact path="/menu/map" component={Map} />
-            <Route exact path="/menu/people" component={People} />
             <Route exact path="/menu/forms" component={Forms} />
             <Route exact path="/menu/buildingtable/:formId" component={BuildingTable} />
             <Route exact path="/menu/logs" component={Logs} />
